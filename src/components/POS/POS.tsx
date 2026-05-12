@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MENU, ADDONS } from '../../constants/menu';
 import { ShoppingCart, Trash2, Plus, Minus, MoveRight, ChevronLeft, CreditCard, Banknote, ReceiptText, Search, Printer, Mail, Download, CheckCircle2, X } from 'lucide-react';
-import { db, handleFirestoreError, OperationType } from '../../lib/firebase';
+import { db, handleFirestoreError, OperationType, runTransactionWrapper } from '../../lib/firebase';
 import QRCode from 'qrcode';
 import { 
   collection, 
@@ -196,7 +196,7 @@ export function POS({ user }: { user: any }) {
     };
 
     try {
-      await runTransaction(db, async (transaction) => {
+      await runTransactionWrapper(db, async (transaction) => {
         // 1. Resolve Inventory IDs
         const inventoryRef = collection(db, 'inventory');
         let invSnapshot;
@@ -272,11 +272,22 @@ export function POS({ user }: { user: any }) {
       });
 
     } catch (error) {
-      console.error(error);
-      if (error instanceof Error && error.message.includes('{')) {
-        toast.error('Security error. Check console.');
+      console.error('Order processing error:', error);
+      
+      if (error instanceof Error) {
+        if (error.message.includes('permission-denied')) {
+          toast.error('Permission denied. Check your access rights.');
+        } else if (error.message.includes('resource-exhausted')) {
+          toast.error('Quota exceeded. Try again later.');
+        } else if (error.message.includes('unavailable') || error.message.includes('deadline-exceeded')) {
+          toast.error('Service temporarily unavailable. Try again.');
+        } else if (error.message.includes('{')) {
+          toast.error('Security error. Check console for details.');
+        } else {
+          toast.error(`Order failed: ${error.message}`);
+        }
       } else {
-        toast.error('Failed to process order');
+        toast.error('Unknown error occurred during checkout');
       }
     } finally {
       setIsProcessing(false);

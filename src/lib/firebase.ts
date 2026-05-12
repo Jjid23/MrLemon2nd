@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
+import { getFirestore, doc, collection, getDocs, runTransaction as runTransactionFn, serverTimestamp } from 'firebase/firestore';
 import firebaseConfig from '../../firebase-applet-config.json';
 
 const app = initializeApp(firebaseConfig);
@@ -54,13 +54,11 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
   throw new Error(JSON.stringify(errInfo));
 }
 
-async function testConnection() {
+export async function runTransactionWrapper(db: any, updateFunction: (transaction: any) => Promise<any>) {
   try {
-    await getDocFromServer(doc(db, 'test', 'connection'));
+    return await runTransactionFn(db, updateFunction);
   } catch (error) {
-    if(error instanceof Error && error.message.includes('the client is offline')) {
-      console.error("Please check your Firebase configuration.");
-    }
+    handleFirestoreError(error, OperationType.WRITE, 'transaction');
+    throw error;
   }
 }
-testConnection();
