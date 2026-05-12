@@ -138,22 +138,21 @@ export default function App() {
               handleFirestoreError(error, OperationType.WRITE, userPath);
               return;
             }
-          }
-          
-          setUserData(currentUserData);
-          
-          // Seed Roles and fetch permissions
-          await seedRoles();
-          
-          if (currentUserData.roleId) {
-            const roleSnap = await getDoc(doc(db, 'roles', currentUserData.roleId));
-            if (roleSnap.exists()) {
-              setPermissions(roleSnap.data().permissions || []);
+            setUserData(currentUserData);
+            
+            // Seed Roles and fetch permissions
+            await seedRoles();
+            
+            if (currentUserData.roleId) {
+              const roleSnap = await getDoc(doc(db, 'roles', currentUserData.roleId));
+              if (roleSnap.exists()) {
+                setPermissions(roleSnap.data().permissions || []);
+              }
             }
           }
-
+          
           // Seed inventory if needed
-          if (currentUserData.roleId === 'admin' || (user.email && ADMIN_EMAILS.includes(user.email))) {
+          if (currentUserData && (currentUserData.roleId === 'admin' || (user.email && ADMIN_EMAILS.includes(user.email)))) {
             await seedInventory();
           }
         } else {
