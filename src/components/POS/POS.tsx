@@ -182,7 +182,15 @@ export function POS({ user }: { user: any }) {
   };
 
   const handleCheckout = async () => {
-    if (cart.length === 0 || !user) return;
+    if (cart.length === 0 || !user) {
+      console.error('Checkout validation failed:', { cartLength: cart.length, hasUser: !!user });
+      return;
+    }
+    
+    // Debug user permissions
+    console.log('Current user:', { uid: user.uid, email: user.email, name: user.name });
+    console.log('User role data:', user);
+    
     setIsProcessing(true);
     
     const currentOrderData = {

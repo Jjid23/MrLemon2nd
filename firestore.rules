@@ -99,12 +99,12 @@ service cloud.firestore {
     match /orders/{orderId} {
       allow read: if isSignedIn() && (hasPermission('orders.read') || resource.data.cashierId == request.auth.uid);
       
-      allow create: if hasPermission('orders.create') && 
+      allow create: if isSignedIn() && 
                     isValidOrder(incoming()) && 
                     incoming().cashierId == request.auth.uid &&
                     isValidId(orderId);
       
-      allow update: if hasPermission('reports.view'); // Admins/Managers can edit history
+      allow update: if isSignedIn() && (hasPermission('reports.view') || resource.data.cashierId == request.auth.uid);
       allow delete: if hasPermission('reports.view');
     }
 
