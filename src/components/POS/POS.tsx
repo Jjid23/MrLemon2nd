@@ -62,7 +62,17 @@ export function POS({ user }: { user: any }) {
 
     // Check base ingredients
     return Object.entries(sizeData.inventory).some(([name, qty]) => {
-      return getStock(name) < (qty as number);
+      const stock = getStock(name);
+      if (stock < (qty as number)) {
+        // Check if it's cups (critical)
+        if (name.includes('Cups')) {
+          toast.error(`${name} are OUT OF STOCK! Need to restock immediately!`);
+        } else if (stock <= 10) {
+          toast.warning(`${name} is running LOW on stock (${stock} remaining)`);
+        }
+        return true;
+      }
+      return false;
     });
   };
 
@@ -74,14 +84,30 @@ export function POS({ user }: { user: any }) {
 
     // Check specific flavor items
     if (flavorName.includes('Yakult')) {
-      return getStock('Yakult') < 1;
+      const stock = getStock('Yakult');
+      if (stock < 1) {
+        toast.error('Yakult is OUT OF STOCK!');
+        return true;
+      } else if (stock <= 5) {
+        toast.warning(`Yakult is running LOW on stock (${stock} bottles remaining)`);
+        return false;
+      }
+      return false;
     }
 
     if (category === 'Flavored' || category.includes('Selection')) {
         // Many selections use syrups or specific fruits
         const syrupName = flavorName.replace(' Lemonade', '').replace(' Calamansi', '') + ' Syrup';
         if (inventory.some(i => i.name === syrupName)) {
-            return getStock(syrupName) < 1;
+            const stock = getStock(syrupName);
+            if (stock < 1) {
+              toast.error(`${syrupName} is OUT OF STOCK!`);
+              return true;
+            } else if (stock <= 2) {
+              toast.warning(`${syrupName} is running LOW on stock (${stock} liters remaining)`);
+              return false;
+            }
+            return false;
         }
     }
 
@@ -89,7 +115,17 @@ export function POS({ user }: { user: any }) {
   };
 
   const isAddOnOutOfStock = (addonName: string) => {
-    return getStock(addonName) < 1;
+    const stock = getStock(addonName);
+    if (stock < 1) {
+      // Show out of stock notification
+      toast.error(`${addonName} is OUT OF STOCK!`);
+      return true;
+    } else if (stock <= 5) {
+      // Show low stock notification
+      toast.warning(`${addonName} is running LOW on stock (${stock} remaining)`);
+      return false;
+    }
+    return false;
   };
   
   const [showPayment, setShowPayment] = useState(false);
@@ -599,7 +635,18 @@ export function POS({ user }: { user: any }) {
                         {isSelected && <Plus size={14} strokeWidth={4} />}
                       </div>
                       {outOfStock ? `${addon.name} (OUT)` : addon.name}
-                      {!outOfStock && <span className="ml-2 py-1.5 px-3 bg-black/5 dark:bg-white/5 rounded-lg text-[10px] opacity-60">PHP {addon.price}</span>}
+                      {!outOfStock && (
+                        <div className="flex items-center gap-2">
+                          <span className="ml-2 py-1.5 px-3 bg-black/5 dark:bg-white/5 rounded-lg text-[10px] opacity-60">PHP {addon.price}</span>
+                          {(() => {
+                            const stock = getStock(addon.name);
+                            if (stock <= 5) {
+                              return <span className="ml-2 px-2 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded text-[9px] font-black">LOW</span>;
+                            }
+                            return null;
+                          })()}
+                        </div>
+                      )}
                     </button>
                   )
                 })}
