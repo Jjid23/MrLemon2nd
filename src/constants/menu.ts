@@ -47,8 +47,7 @@ export const MENU: Drink[] = [
         inventory: { 'Cups 16oz': 1, 'Lemon': 1 },
         categories: {
           'Classic': [{ name: 'Classic Lemonade', extra: 0 }],
-          'Flavored Jam': [{ name: 'Flavored Jam Lemonade', extra: 10 }],
-          'Yakult': [{ name: 'Yakult Lemonade', extra: 20 }]
+          'Flavored Jam': [{ name: 'Flavored Jam Lemonade', extra: 10 }]
         }
       },
       '22oz': {
@@ -57,8 +56,7 @@ export const MENU: Drink[] = [
         inventory: { 'Cups 22oz': 1, 'Lemon': 2 },
         categories: {
           'Classic': [{ name: 'Classic Lemonade', extra: 0 }],
-          'Flavored Jam': [{ name: 'Flavored Jam Lemonade', extra: 10 }],
-          'Yakult': [{ name: 'Yakult Lemonade', extra: 20 }]
+          'Flavored Jam': [{ name: 'Flavored Jam Lemonade', extra: 10 }]
         }
       }
     }
@@ -85,8 +83,7 @@ export const MENU: Drink[] = [
         categories: {
           'Cold Selection': [
             { name: 'Classic Calamansi', extra: 0 },
-            { name: 'Mango Calamansi', extra: 10 },
-            { name: 'Yakult Calamansi', extra: 20 }
+            { name: 'Mango Calamansi', extra: 10 }
           ]
         }
       },
@@ -97,8 +94,7 @@ export const MENU: Drink[] = [
         categories: {
           'Cold Selection': [
             { name: 'Classic Calamansi', extra: 0 },
-            { name: 'Mango Calamansi', extra: 10 },
-            { name: 'Yakult Calamansi', extra: 20 }
+            { name: 'Mango Calamansi', extra: 10 }
           ]
         }
       }
@@ -148,6 +144,5 @@ export const MENU: Drink[] = [
 
 export const ADDONS = [
   { name: 'Nata de Coco', price: 10 },
-  { name: 'Popping Bobba', price: 20 },
-  { name: 'Yakult', price: 20 }
+  { name: 'Popping Bobba', price: 20 }
 ];

@@ -72,11 +72,7 @@ export function POS({ user }: { user: any }) {
     // Check if the size itself is out of stock (base ingredients)
     if (isDrinkSizeOutOfStock(drink, size)) return true;
 
-    // Check specific flavor items
-    if (flavorName.includes('Yakult')) {
-      return getStock('Yakult') < 1;
-    }
-
+    
     if (category === 'Flavored Jam' || category.includes('Selection')) {
         // Many selections use syrups or specific fruits
         const syrupName = flavorName.replace(' Lemonade', '').replace(' Calamansi', '') + ' Syrup';
@@ -189,11 +185,7 @@ export function POS({ user }: { user: any }) {
             });
           }
 
-          // Special ingredients (Yakult)
-          if (item.flavor === 'Yakult') {
-             deductions['Yakult'] = (deductions['Yakult'] || 0) + item.quantity;
-          }
-
+          
           // Flavor syrups
           if (item.category === 'Flavor' || (item.drinkId === 'calamansi' && item.flavor === 'Mango')) {
             const flavorName = item.flavor + ' Syrup';
