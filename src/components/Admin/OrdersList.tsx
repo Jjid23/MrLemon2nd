@@ -28,7 +28,7 @@ export function OrdersList() {
     if (orders.length === 0) return;
 
     // Define CSV headers
-    const headers = ['Order ID', 'Date', 'Cashier', 'Payment Method', 'Subtotal', 'VAT', 'Total', 'Items'];
+    const headers = ['Order ID', 'Date', 'Cashier', 'Payment Method', 'Subtotal', 'Total', 'Items'];
     
     // Map orders to CSV rows
     const rows = orders.map(order => [
@@ -37,7 +37,6 @@ export function OrdersList() {
       `"${order.cashierName}"`,
       order.paymentMethod,
       order.subtotal,
-      order.vat,
       order.total,
       `"${order.items?.map((item: any) => `${item.quantity}x ${item.drinkName} (${item.size})${item.addOns?.length ? ` + ${item.addOns.join(', ')}` : ''}`).join('; ')}"`
     ]);

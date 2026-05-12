@@ -97,8 +97,7 @@ export function POS({ user }: { user: any }) {
   const [orderId, setOrderId] = useState<string>('');
 
   const subtotal = useMemo(() => cart.reduce((sum, item) => sum + item.price * item.quantity, 0), [cart]);
-  const vat = subtotal * 0.12;
-  const total = subtotal + vat;
+  const total = subtotal;
 
   const resetSelection = () => {
     setStep(1);
@@ -149,7 +148,6 @@ export function POS({ user }: { user: any }) {
     const currentOrderData = {
       items: [...cart],
       subtotal,
-      vat,
       total,
       paymentMethod,
       cashierId: user.uid,
@@ -283,9 +281,6 @@ export function POS({ user }: { user: any }) {
     doc.setFontSize(8);
     doc.text('Subtotal:', 5, y);
     doc.text(order.subtotal.toFixed(2), 75, y, { align: 'right' });
-    y += 4;
-    doc.text('VAT (12%):', 5, y);
-    doc.text(order.vat.toFixed(2), 75, y, { align: 'right' });
     y += 6;
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
@@ -711,8 +706,8 @@ export function POS({ user }: { user: any }) {
               <span>₱{subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-[11px] text-stone-400 dark:text-stone-500 font-black uppercase tracking-widest leading-none">
-              <span>VAT (12%)</span>
-              <span>₱{vat.toFixed(2)}</span>
+              <span>Total</span>
+              <span>₱{total.toFixed(2)}</span>
             </div>
           </div>
 
