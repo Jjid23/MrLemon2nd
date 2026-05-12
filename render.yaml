@@ -1,0 +1,29 @@
+services:
+  # Web Service
+  - type: web
+    name: mr-lemon-app
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    autoDeploy: true
+    
+  # Static Site (if needed)
+  - type: web
+    name: mr-lemon-static
+    env: static
+    buildCommand: npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://mr-lemon-app.onrender.com
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    autoDeploy: true
