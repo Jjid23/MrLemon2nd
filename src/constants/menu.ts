@@ -36,8 +36,8 @@ export const MENU: Drink[] = [
         inventory: { 'Cups 12oz': 1, 'Lemon': 1 },
         categories: {
           'Hot Selection': [
-            { name: 'Classic Lemonade', extra: 0 },
-            { name: 'Ginger Lemonade', extra: 20 }
+            { name: 'Ginger Lemon', extra: 20 },
+            { name: 'Classic Lemon', extra: 0 }
           ]
         }
       },
@@ -47,7 +47,8 @@ export const MENU: Drink[] = [
         inventory: { 'Cups 16oz': 1, 'Lemon': 1 },
         categories: {
           'Classic': [{ name: 'Classic Lemonade', extra: 0 }],
-          'Flavored Jam': [{ name: 'Flavored Jam Lemonade', extra: 10 }]
+          'Yakult': [{ name: 'Yakult Lemonade', extra: 20 }],
+          'Flavored': [{ name: 'Flavored Lemonade', extra: 10 }]
         }
       },
       '22oz': {
@@ -56,7 +57,8 @@ export const MENU: Drink[] = [
         inventory: { 'Cups 22oz': 1, 'Lemon': 2 },
         categories: {
           'Classic': [{ name: 'Classic Lemonade', extra: 0 }],
-          'Flavored Jam': [{ name: 'Flavored Jam Lemonade', extra: 10 }]
+          'Yakult': [{ name: 'Yakult Lemonade', extra: 20 }],
+          'Flavored': [{ name: 'Flavored Lemonade', extra: 10 }]
         }
       }
     }
@@ -71,8 +73,8 @@ export const MENU: Drink[] = [
         inventory: { 'Cups 12oz': 1, 'Calamansi': 3 },
         categories: {
           'Hot Selection': [
-            { name: 'Classic Calamansi', extra: 0 },
-            { name: 'Ginger Calamansi', extra: 20 }
+            { name: 'Ginger Lemon', extra: 20 },
+            { name: 'Classic Lemon', extra: 0 }
           ]
         }
       },
@@ -83,44 +85,24 @@ export const MENU: Drink[] = [
         categories: {
           'Cold Selection': [
             { name: 'Classic Calamansi', extra: 0 },
-            { name: 'Mango Calamansi', extra: 10 }
+            { name: 'Mango Calamansi', extra: 10 },
+            { name: 'Yakult Calamansi', extra: 20 },
+            { name: 'Ginger Calamansi', extra: 20 }
           ]
         }
       },
       '22oz': {
         price: 59,
-        type: 'both',
+        type: 'cold',
         inventory: { 'Cups 22oz': 1, 'Calamansi': 6 },
         categories: {
           'Cold Selection': [
             { name: 'Classic Calamansi', extra: 0 },
-            { name: 'Mango Calamansi', extra: 10 }
+            { name: 'Mango Calamansi', extra: 10 },
+            { name: 'Yakult Calamansi', extra: 20 },
+            { name: 'Ginger Calamansi', extra: 20 }
           ]
         }
-      }
-    }
-  },
-  {
-    id: 'quenchers',
-    name: 'Quenchers',
-    sizes: {
-      '16oz': {
-        price: 59,
-        type: 'cold',
-        inventory: { 'Cups 16oz': 1 },
-        flavors: [
-          { name: 'Tropical Fruit', extra: 0 },
-          { name: 'Pink Peach', extra: 0 }
-        ]
-      },
-      '22oz': {
-        price: 79,
-        type: 'cold',
-        inventory: { 'Cups 22oz': 1 },
-        flavors: [
-          { name: 'Tropical Fruit', extra: 0 },
-          { name: 'Pink Peach', extra: 0 }
-        ]
       }
     }
   },
@@ -131,12 +113,26 @@ export const MENU: Drink[] = [
       '16oz': {
         price: 59,
         type: 'cold',
-        inventory: { 'Cups 16oz': 1 }
+        inventory: { 'Cups 16oz': 1 },
+        flavors: [
+          { name: 'Green Apple', extra: 0 },
+          { name: 'Strawberry', extra: 0 },
+          { name: 'Mango', extra: 0 },
+          { name: 'Kiwi', extra: 0 },
+          { name: 'Peach', extra: 0 }
+        ]
       },
       '22oz': {
         price: 79,
         type: 'cold',
-        inventory: { 'Cups 22oz': 1 }
+        inventory: { 'Cups 22oz': 1 },
+        flavors: [
+          { name: 'Green Apple', extra: 0 },
+          { name: 'Strawberry', extra: 0 },
+          { name: 'Mango', extra: 0 },
+          { name: 'Kiwi', extra: 0 },
+          { name: 'Peach', extra: 0 }
+        ]
       }
     }
   }

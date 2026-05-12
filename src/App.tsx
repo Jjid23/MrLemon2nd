@@ -20,6 +20,7 @@ const INITIAL_INVENTORY = [
   { name: 'Cups 22oz', quantity: 500, unit: 'pcs' },
   { name: 'Lemon', quantity: 100, unit: 'pcs' },
   { name: 'Calamansi', quantity: 300, unit: 'pcs' },
+  { name: 'Yakult', quantity: 50, unit: 'bottles' },
   { name: 'Nata de Coco', quantity: 20, unit: 'kg' },
   { name: 'Popping Bobba', quantity: 20, unit: 'kg' },
   { name: 'Green Apple Syrup', quantity: 10, unit: 'liters' },
